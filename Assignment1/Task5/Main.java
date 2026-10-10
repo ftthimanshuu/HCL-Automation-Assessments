@@ -1,18 +1,17 @@
-// Design a console-based Bank Management Program in Java that allows a user to create a bank account and perform basic banking operations such as deposit, withdrawal, balance enquiry, and account details display
+// Console-based Bank Management Program
 package Task5;
 
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-// ArrayList<Accounts> accounts = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
         Accounts a = null;
 
         System.out.println("----------> Welcome to Console Bank <----------");
 
         while (true) {
-            System.out.println("Enter your choice");
+            System.out.println("\\nEnter your choice");
             System.out.println("1. Create Bank Account");
             System.out.println("2. Deposit");
             System.out.println("3. Withdrawal");
@@ -25,12 +24,24 @@ public class Main {
 
             switch (choice) {
                 case 1:
+                    if (a != null) {
+                        System.out.println("An account has already been created.");
+                        break;
+                    }
+
                     System.out.println("Enter the Account Holder's Name:");
-                    String Name = sc.nextLine();
+                    String name = sc.nextLine();
+
                     System.out.println("Enter the initial deposit amount:");
                     double initialAmount = sc.nextDouble();
-                    a = new Accounts(Name, initialAmount);
-                    System.out.println("Account Created successfully");
+
+                    if (initialAmount < 0) {
+                        System.out.println("Initial deposit cannot be negative.");
+                        break;
+                    }
+
+                    a = new Accounts(name, initialAmount);
+                    System.out.println("Account created successfully.");
                     break;
 
                 case 2:
@@ -38,16 +49,16 @@ public class Main {
                         System.out.println("Create Account First");
                         break;
                     }
+
                     System.out.println("Enter the amount you need to deposit:");
                     double depositAmount = sc.nextDouble();
+
                     try {
                         a.deposit(depositAmount);
-                        System.out.println("Deposit Successful");
-
+                        System.out.println("Deposit successful.");
                     } catch (InvalidInput e) {
                         System.out.println("Error: " + e.getMessage());
                     }
-
                     break;
 
                 case 3:
@@ -56,16 +67,15 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Enter the amount you need to withdrawal");
+                    System.out.println("Enter the amount you need to withdraw:");
                     double withdrawalAmount = sc.nextDouble();
 
                     try {
                         a.withdrawal(withdrawalAmount);
-                        System.out.println("Amount withdrawal successfully");
-                    } catch (InsufficientBalance e) {
+                        System.out.println("Withdrawal successful.");
+                    } catch (InsufficientBalance | InvalidInput e) {
                         System.out.println("Error: " + e.getMessage());
                     }
-
                     break;
 
                 case 4:
@@ -84,22 +94,16 @@ public class Main {
                     }
 
                     a.displayDetails();
-
                     break;
 
                 case 6:
-                    System.out.println("Thank You for visiting Console Bank");
+                    System.out.println("Thank you for visiting Console Bank.");
                     sc.close();
                     return;
 
                 default:
-                    break;
+                    System.out.println("Invalid choice. Please try again.");
             }
         }
-
-        
     }
 }
-
-
-

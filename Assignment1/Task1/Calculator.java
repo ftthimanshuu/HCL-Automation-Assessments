@@ -1,4 +1,5 @@
-// A class sixth student required to solve basic mathematics problems. For this he/ she needs to perform operations such as addition, subtraction, multiplication, division, remainder, square, cube, and absolute. Write a program using methods to perform these basic operations.
+// A class sixth student required to solve basic mathematics problems.
+// This program performs basic operations using methods.
 
 import java.util.Scanner;
 
@@ -38,13 +39,11 @@ public class Calculator {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        double a;
-        double b;
-        double result = 0;
-        char ch;
+        double a, b, result;
+        int ch;
 
         do {
-            System.out.println("\n1. Addition");
+            System.out.println("\\n1. Addition");
             System.out.println("2. Subtraction");
             System.out.println("3. Multiplication");
             System.out.println("4. Division");
@@ -53,75 +52,68 @@ public class Calculator {
             System.out.println("7. Remainder");
             System.out.println("8. Absolute");
             System.out.println("9. Exit");
+            System.out.print("Enter your choice: ");
 
-            ch = sc.next().charAt(0);
+            if (!sc.hasNextInt()) {
+                System.out.println("Please enter a number from 1 to 9.");
+                sc.next();
+                continue;
+            }
 
-            if (ch == '9') {
+            ch = sc.nextInt();
+
+            if (ch == 9) {
                 break;
             }
 
-            if (ch == '5' || ch == '6' || ch == '8') {
+            if (ch < 1 || ch > 9) {
+                System.out.println("Invalid choice");
+                continue;
+            }
 
-                System.out.println("Enter number:");
+            if (ch == 5 || ch == 6 || ch == 8) {
+                System.out.print("Enter number: ");
                 a = sc.nextDouble();
 
                 switch (ch) {
-                    case '5':
+                    case 5:
                         result = square(a);
                         break;
-
-                    case '6':
+                    case 6:
                         result = cube(a);
                         break;
-
-                    case '8':
-                        result = Math.abs(a);
-                        break;
-
                     default:
-                        System.out.println("Invalid choice");
+                        result = absolute(a);
                 }
-
             } else {
-
-                System.out.println("Enter first number:");
+                System.out.print("Enter first number: ");
                 a = sc.nextDouble();
 
-                System.out.println("Enter second number:");
+                System.out.print("Enter second number: ");
                 b = sc.nextDouble();
 
+                if ((ch == 4 || ch == 7) && b == 0) {
+                    System.out.println(ch == 4
+                            ? "Cannot divide by zero"
+                            : "Cannot find remainder with zero");
+                    continue;
+                }
+
                 switch (ch) {
-                    case '1':
+                    case 1:
                         result = sum(a, b);
                         break;
-
-                    case '2':
+                    case 2:
                         result = subtraction(a, b);
                         break;
-
-                    case '3':
+                    case 3:
                         result = multiplication(a, b);
                         break;
-
-                    case '4':
-                        if (b == 0) {
-                            System.out.println("Cannot divide by zero");
-                            continue;
-                        }
+                    case 4:
                         result = division(a, b);
                         break;
-
-                    case '7':
-                        if (b == 0) {
-                            System.out.println("Cannot find remainder with zero");
-                            continue;
-                        }
-                        result = remainder(a, b);
-                        break;
-
                     default:
-                        System.out.println("Invalid choice");
-                        continue;
+                        result = remainder(a, b);
                 }
             }
 
@@ -130,7 +122,5 @@ public class Calculator {
         } while (true);
 
         sc.close();
-
     }
-
 }
